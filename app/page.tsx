@@ -1,6 +1,5 @@
-import { redirect, RedirectType } from 'next/navigation'
+import { redirect, RedirectType } from "next/navigation";
 
 export default function Home() {
-  redirect('/caixa', RedirectType.replace)
-  return <div></div>;
+  redirect("./caixa", RedirectType.replace);
 }

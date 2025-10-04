@@ -45,9 +45,31 @@ const useSave = () => {
     setShoppingCart: Dispatch<SetStateAction<ShoppingCartItem[]>>,
     totalValue: number
   ) => {
-    const venda = await mutateVenda({ valor: totalValue });
+    if (shoppingCart.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        text: "O carrinho está vazio.",
+      });
+      return;
+    }
 
-    if (!vendaError && venda.data) {
+    const confirm = await Swal.fire({
+      title: "Finalizar venda?",
+      text: `Total: R$ ${totalValue.toFixed(2)}`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sim, finalizar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const venda = await mutateVenda({ valor: totalValue });
+
+      if (venda?.error) throw venda.error;
+      if (!venda?.data) throw new Error("Erro ao registrar a venda.");
+
       const vendasProdutos: VendaProdutoSQL[] = shoppingCart.map((item) => ({
         quantidade: item.quantity,
         valor_total: item.quantity * 10,
@@ -55,22 +77,34 @@ const useSave = () => {
         id_venda_fk: venda.data[0].id,
       }));
 
-      console.log(vendasProdutos);
-
       await mutateVendaProduto(vendasProdutos);
-    }
-    if (!venda.error || !vendaProdutosError || !vendaError) {
+
+      // const sound = new Audio(`../sounds/caixa-registradora.mp3`);
+
+      // sound.play().catch(() => {
+      //   console.warn("Não foi possível reproduzir o som.");
+      // });
+
       Swal.fire({
         icon: "success",
+        title: "Venda concluída!",
         text: "Venda cadastrada com sucesso!",
+        timer: 2000,
+        showConfirmButton: false,
       });
 
       setShoppingCart([]);
-    } else {
-      console.log("Ocorreu um erro ao cadastrar a venda.");
-      console.log(venda.error);
-      console.log(vendaError);
-      console.log(vendaProdutosError);
+    } catch (error) {
+      console.error("Erro ao salvar venda:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao cadastrar venda",
+        text:
+          error instanceof Error
+            ? error.message
+            : "Ocorreu um erro inesperado ao cadastrar a venda.",
+      });
     }
   };
 

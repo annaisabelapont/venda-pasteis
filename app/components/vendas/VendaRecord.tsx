@@ -3,7 +3,7 @@ import { Fragment } from "react";
 
 export default function VendaRecord({ venda }: { venda: VendaQueryResult }) {
   return (
-    <li className="flex justify-between border-b border-grey p-5 hover:bg-orange/7 transition-colors duration-100">
+    <li className="flex justify-between text-xs md:text-md border-b border-grey p-5 hover:bg-orange/7 transition-colors duration-100">
       <div>
         {venda.venda_produto.map((prod, index) => (
           <Fragment key={index}>

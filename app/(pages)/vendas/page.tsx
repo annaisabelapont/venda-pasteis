@@ -23,8 +23,8 @@ export default function VendasListagemEEstatisticas() {
   const quantidadeTotal = somaQuantidade.data?.data?.[0]?.sum ?? 0;
 
   return (
-    <div className="mx-50">
-      <div className="flex justify-center flex-wrap gap-15 mt-6 mb-14">
+    <div className="sm:mx-8 lg:mx-50">
+      <div className="flex flex-col md:flex-row justify-center flex-wrap gap-5 md:gap-15 mt-6 mb-14">
         {!(somaValor.isLoading || somaQuantidade.isLoading) && (
           <>
             <Statistics

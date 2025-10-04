@@ -1,12 +1,14 @@
 import type { NextConfig } from "next";
 
-const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] || "venda-pasteis";
+const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1];
+
+const base = repoName ? `/${repoName}` : "";
 
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
-  basePath: `/${repoName}`,
-  assetPrefix: `/${repoName}/`,
+  basePath: `${base}`,
+  assetPrefix: `${base}/`,
 };
 
 export default nextConfig;
