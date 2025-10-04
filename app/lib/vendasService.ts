@@ -1,9 +1,7 @@
-import { createClient, PostgrestSingleResponse } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import {
   mutationOptions,
-  queryOptions,
-  useMutation,
-  useQuery,
+  queryOptions
 } from "@tanstack/react-query";
 import { Venda, VendaProduto } from "./types";
 
@@ -15,8 +13,9 @@ export const useSupabaseClient = () => {
   return supabase;
 };
 
-//
+// listagens
 
+// TODO: relacionar com a tabela venda_produto
 export const useListarVendasQuery = () => {
   const supabase = useSupabaseClient();
 
