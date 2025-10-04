@@ -8,7 +8,7 @@ export default function ProdutoButton({
   handleClick: () => void
 }) {
   return (
-    <button onClick={handleClick} className="flex flex-col items-center justify-between border-1 border-grey p-4 gap-3 hover:bg-orange/10 transition-colors duration-100 rounded-md">
+    <button onClick={handleClick} className="flex flex-col items-center justify-between border-1 border-grey p-4 gap-3 hover:bg-orange/10 hover:-translate-y-0.5 transition-all duration-100 rounded-md">
       <div className="w-full bg-grey/20 border-1 border-grey/35 flex justify-center items-center rounded-md">
         {/* eslint-disable @next/next/no-img-element  */}
         <img

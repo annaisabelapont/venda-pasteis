@@ -32,7 +32,6 @@ export default function Caixa() {
     if (itemInCartIndex !== -1) {
       const itemCart = shoppingCart[itemInCartIndex];
       itemCart.quantity++;
-      // const newCartList = (shoppingCart[itemInCartIndex] = itemCart);
       setShoppingCart(
         shoppingCart.map((item, index) =>
           index === itemInCartIndex ? itemCart : item
@@ -61,8 +60,8 @@ export default function Caixa() {
   }, [shoppingCart]);
 
   return (
-    <div className="flex gap-10 justify-center mt-5">
-      <div className=" grid grid-cols-3 grid-flow-row gap-8 p-7 border-1 border-grey  bg-white rounded-md">
+    <div className="flex max-lg:flex-col gap-5 lg:gap-10 justify-center mt-5">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-flow-row gap-8 p-7 border-1 border-grey  bg-white rounded-md">
         {produtosList.map((prod, idx) => (
           <ProdutoButton
             key={idx}
@@ -89,7 +88,7 @@ export default function Caixa() {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-3.5 min-w-56">
+        <div className="flex flex-col gap-3.5 lg:min-w-56">
           <div className="flex justify-between mb-3 font-semibold text-lg">
             <span>TOTAL</span>
 
