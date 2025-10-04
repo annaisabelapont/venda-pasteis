@@ -12,7 +12,7 @@ export default function ProdutoButton({
       <div className="w-full bg-grey/20 border-1 border-grey/35 flex justify-center items-center rounded-md">
         {/* eslint-disable @next/next/no-img-element  */}
         <img
-          src={"../.." + imgSrc}
+          src={"../" + imgSrc}
           className="h-32 object-contain"
           alt="Imagem do item"
         />
