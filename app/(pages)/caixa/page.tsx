@@ -96,8 +96,9 @@ export default function Caixa() {
           </div>
 
           <button
+            disabled={shoppingCart.length === 0}
             onClick={() => setShoppingCart([])}
-            className="bg-red-50 border-1 border-red-100 text-red-950 p-1.5 px-3 rounded-md font-medium hover:brightness-97 transition-filter duration-100"
+            className="bg-red-50 border-1 border-red-100 text-red-950 p-1.5 px-3 rounded-md font-medium hover:brightness-97 transition-filter duration-100 disabled:opacity-50 disabled:cursor-not-allowed!"
           >
             Cancelar compra ❌
           </button>

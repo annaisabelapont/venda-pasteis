@@ -22,8 +22,9 @@ export default function ConfirmarCompraButton({
 
   return (
     <button
+      disabled={shoppingCart.length === 0}
       onClick={() => save(shoppingCart, setShoppingCart, totalValue)}
-      className="rounded-md font-medium p-1.5 px-3 bg-green-50 border-1 border-green-200 text-green-950 hover:brightness-97 transition-filter duration-100"
+      className="rounded-md font-medium p-1.5 px-3 bg-green-50 border-1 border-green-200 text-green-950 hover:brightness-97 transition-filter duration-100 disabled:opacity-50 disabled:cursor-not-allowed!"
     >
       Confirmar compra ✅
     </button>
@@ -48,17 +49,17 @@ const useSave = () => {
     if (!vendaError && venda.data) {
       const vendasProdutos: VendaProdutoSQL[] = shoppingCart.map((item) => ({
         quantidade: item.quantity,
-        valor_total: totalValue,
+        valor_total: item.quantity * 10,
         id_prod_fk: item.produto.id,
         id_venda_fk: venda.data[0].id,
       }));
 
-      console.log(vendasProdutos)
+      console.log(vendasProdutos);
 
       await mutateVendaProduto(vendasProdutos);
     }
     if (!venda.error || !vendaProdutosError || !vendaError) {
-      console.log('Venda cadastrada com sucesso!')
+      console.log("Venda cadastrada com sucesso!");
       setShoppingCart([]);
     } else {
       console.log("Ocorreu um erro ao cadastrar a venda.");
