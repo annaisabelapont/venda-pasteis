@@ -20,13 +20,36 @@ export type VendaQueryResult = {
 
 export const useListarVendasQuery = () =>
   queryOptions({
-    queryKey: ["venda-produtos-listagem"],
+    queryKey: ["vendas-listagem"],
+    refetchInterval: 10000,
     queryFn: async () =>
       await supabase
         .from("venda")
         .select(
           "valor, venda_produto (quantidade, valor_total, produto (nome))"
         )
+        .overrideTypes<VendaQueryResult[]>(),
+  });
+
+export const useSumVendasQuery = () =>
+  queryOptions({
+    queryKey: ["vendas-sum"],
+    refetchInterval: 10000,
+    queryFn: async () =>
+      await supabase
+        .from("venda_produto")
+        .select("valor_total.sum()")
+        .overrideTypes<VendaQueryResult[]>(),
+  });
+
+export const useSumQuantProdsQuery = () =>
+  queryOptions({
+    queryKey: ["vendas-quantidade-sum"],
+    refetchInterval: 10000,
+    queryFn: async () =>
+      await supabase
+        .from("venda_produto")
+        .select("quantidade.sum()")
         .overrideTypes<VendaQueryResult[]>(),
   });
 

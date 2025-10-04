@@ -13,14 +13,16 @@ export default function ListagemVendas() {
       {(vendas.isError || vendas.error !== null) && (
         <span>Não foi possível carregar a listagem de vendas.</span>
       )}
-      {
-        vendas.data !== undefined &&
-          vendas.data.data !== null &&
-          vendas.data.data.map((venda, index) => (
-            <VendaRecord key={index} venda={venda} />
-          ))
-        // <pre>{JSON.stringify(vendas.data.data, null, 2)}</pre>
-      }
+      {vendas.data !== undefined &&
+        vendas.data.data !== null &&
+        vendas.data.data.map((venda, index) => (
+          <VendaRecord key={index} venda={venda} />
+        ))}
+
+      {vendas.data !== undefined &&
+        vendas.data.data !== null &&
+        vendas.data.data.length === 0 &&
+        "Ainda não há nenhuma venda cadastrada."}
     </ul>
   );
 }
