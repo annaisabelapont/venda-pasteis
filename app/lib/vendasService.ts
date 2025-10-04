@@ -1,58 +1,57 @@
-import { createClient } from "@supabase/supabase-js";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { createClient, PostgrestSingleResponse } from "@supabase/supabase-js";
+import {
+  mutationOptions,
+  queryOptions,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import { Venda, VendaProduto } from "./types";
 
 const supabaseUrl = "https://wmruvrmxaiqusvyfllyq.supabase.co";
-const supabaseKey = process.env.SUPABASE_KEY!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY!;
 
-const useSupabaseClient = () => {
+export const useSupabaseClient = () => {
   const supabase = createClient(supabaseUrl, supabaseKey);
   return supabase;
 };
 
-export const vendasService = {
-  cadastrar: async (venda: Venda, vendaProdutos: VendaProduto[]) => {
-    const supabase = useSupabaseClient();
+//
 
-    const {mutate: vendaMutate} = useMutation({
-      mutationFn: async () =>
-        await supabase.from("venda").insert({
-          id: venda.id,
-          valor: venda.valor,
-        }),
-    });
+export const useListarVendasQuery = () => {
+  const supabase = useSupabaseClient();
 
-    vendaMutate();
+  return queryOptions({
+    queryKey: ["vendas-listagem"],
+    queryFn: async () => await supabase.from("venda").select(),
+  });
+};
 
-    //
+// cadastros
 
-    vendaProdutos.forEach((vp) => {
-      const {mutate: vpMutate} = useMutation({
-        mutationFn: async () =>
-          await supabase.from("venda_produto").insert({
-            quantidade: vp.quantidade,
-            valor_total: vp.valorTotal,
-            id_prod_fk: vp.idProdFk,
-            id_venda_fk: vp.idVendaFk,
-          }),
-      });
+export const useCadastrarVendaMutation = (venda: Venda) => {
+  const supabase = useSupabaseClient();
 
-      vpMutate();
-    });
-  },
+  return mutationOptions({
+    mutationFn: async () =>
+      await supabase.from("venda").insert({
+        id: venda.id,
+        valor: venda.valor,
+      }),
+  });
+};
 
-  listar: async () => {
-    const supabase = useSupabaseClient();
+export const useCadastrarVendaProdutosMutation = (
+  vendaProduto: VendaProduto
+) => {
+  const supabase = useSupabaseClient();
 
-    const {
-      data: vendas,
-      isLoading,
-      isError,
-    } = useQuery({
-      queryKey: ["vendas-listagem"],
-      queryFn: async () => await supabase.from("produto").select(),
-    });
-
-    return { vendas, isLoading, isError };
-  },
+  return mutationOptions({
+    mutationFn: async () =>
+      await supabase.from("venda_produto").insert({
+        quantidade: vendaProduto.quantidade,
+        valor_total: vendaProduto.valorTotal,
+        id_prod_fk: vendaProduto.idProdFk,
+        id_venda_fk: vendaProduto.idVendaFk,
+      }),
+  });
 };

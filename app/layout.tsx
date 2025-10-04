@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { QueryProvider } from "./providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,7 +47,9 @@ export default function RootLayout({
           </nav>
         </header>
 
-        <main className="p-5 overflow-auto bg-grey/10 flex-1">{children}</main>
+        <main className="p-5 overflow-auto bg-grey/10 flex-1">
+          <QueryProvider>{children}</QueryProvider>
+        </main>
       </body>
     </html>
   );
