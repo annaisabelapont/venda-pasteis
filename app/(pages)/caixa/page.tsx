@@ -12,15 +12,15 @@ import { useEffect, useState } from "react";
 
 export default function Caixa() {
   const produtosList: Produto[] = [
-    { id: 1, valorUnitario: 10, nome: "Queijo", imgSrc: "/pastel-queijo.jpg" },
+    { id: 1, valorUnitario: 10, nome: "Queijo", imgSrc: "pastel-queijo.jpg" },
     {
       id: 2,
       valorUnitario: 10,
       nome: "Carne com queijo",
-      imgSrc: "/pastel-carne-queijo.jpg",
+      imgSrc: "pastel-carne-queijo.jpg",
     },
-    { id: 3, valorUnitario: 10, nome: "Carne", imgSrc: "/pastel-carne.webp" },
-    { id: 4, valorUnitario: 10, nome: "Pizza", imgSrc: "/pastel-pizza.webp" },
+    { id: 3, valorUnitario: 10, nome: "Carne", imgSrc: "pastel-carne.webp" },
+    { id: 4, valorUnitario: 10, nome: "Pizza", imgSrc: "pastel-pizza.webp" },
   ];
 
   const [shoppingCart, setShoppingCart] = useState<ShoppingCartItem[]>([]);
