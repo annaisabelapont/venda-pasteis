@@ -37,11 +37,10 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Build and Export
+      - name: Build
         run: |
           pnpm build
-          pnpm export
-
+  
       - name: Upload static site as artifact
         uses: actions/upload-pages-artifact@v3
         with:
