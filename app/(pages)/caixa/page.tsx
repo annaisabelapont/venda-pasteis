@@ -1,5 +1,11 @@
 "use client";
+export type ShoppingCartItem = {
+  itemCartId: string;
+  quantity: number;
+  produto: Produto;
+};
 
+import ConfirmarCompraButton from "@/app/components/caixa/ConfirmarCompraButton";
 import ProdutoButton from "@/app/components/caixa/ProdutoButton";
 import { Produto } from "@/app/lib/types";
 import { useEffect, useState } from "react";
@@ -16,12 +22,6 @@ export default function Caixa() {
     { id: 3, valorUnitario: 10, nome: "Carne", imgSrc: "/pastel-carne.webp" },
     { id: 4, valorUnitario: 10, nome: "Pizza", imgSrc: "/pastel-pizza.webp" },
   ];
-
-  type ShoppingCartItem = {
-    itemCartId: string;
-    quantity: number;
-    produto: Produto;
-  };
 
   const [shoppingCart, setShoppingCart] = useState<ShoppingCartItem[]>([]);
 
@@ -41,7 +41,7 @@ export default function Caixa() {
       setShoppingCart([
         ...shoppingCart,
         {
-          itemCartId: `${Date.now().toString()}-${Math.random()}-${Math.random()}`,
+          itemCartId: `${Date.now().toString()}-${Math.random()}}`,
           quantity: 1,
           produto,
         },
@@ -56,7 +56,7 @@ export default function Caixa() {
       (sum, item) => (sum += item.quantity),
       0
     );
-    setTotalValue(sumValue);
+    setTotalValue(sumValue * 10);
   }, [shoppingCart]);
 
   return (
@@ -92,7 +92,7 @@ export default function Caixa() {
           <div className="flex justify-between mb-3 font-semibold text-lg">
             <span>TOTAL</span>
 
-            <span>R$ {totalValue * 10},00</span>
+            <span>R$ {totalValue},00</span>
           </div>
 
           <button
@@ -102,9 +102,11 @@ export default function Caixa() {
             Cancelar compra ❌
           </button>
 
-          <button className="rounded-md font-medium p-1.5 px-3 bg-green-50 border-1 border-green-200 text-green-950 hover:brightness-97 transition-filter duration-100">
-            Confirmar compra ✅
-          </button>
+          <ConfirmarCompraButton
+            shoppingCart={shoppingCart}
+            setShoppingCart={setShoppingCart}
+            totalValue={totalValue}
+          />
         </div>
       </div>
     </div>

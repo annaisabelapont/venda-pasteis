@@ -6,7 +6,6 @@ export type Produto = {
 };
 
 export type Venda = {
-  id: number;
   valor: number;
 };
 
@@ -15,4 +14,11 @@ export type VendaProduto = {
   valorTotal: number;
   idProdFk: number;
   idVendaFk: number;
+};
+
+export type VendaProdutoSQL = {
+  quantidade: number;
+  valor_total: number;
+  id_prod_fk: number;
+  id_venda_fk: number;
 };
