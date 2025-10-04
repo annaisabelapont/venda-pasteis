@@ -2,7 +2,7 @@
 
 import ProdutoButton from "@/app/components/caixa/ProdutoButton";
 import { Produto } from "@/app/lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Caixa() {
   const produtosList: Produto[] = [
@@ -41,10 +41,24 @@ export default function Caixa() {
     } else {
       setShoppingCart([
         ...shoppingCart,
-        { itemCartId: new Date().getMilliseconds().toString(), quantity: 1, produto },
+        {
+          itemCartId: `${Date.now().toString()}-${Math.random()}-${Math.random()}`,
+          quantity: 1,
+          produto,
+        },
       ]);
     }
   };
+
+  const [totalValue, setTotalValue] = useState(0);
+
+  useEffect(() => {
+    const sumValue = shoppingCart.reduce(
+      (sum, item) => (sum += item.quantity),
+      0
+    );
+    setTotalValue(sumValue);
+  }, [shoppingCart]);
 
   return (
     <div className="flex gap-10 justify-center mt-5">
@@ -79,10 +93,13 @@ export default function Caixa() {
           <div className="flex justify-between mb-3 font-semibold text-lg">
             <span>TOTAL</span>
 
-            <span>R$ 30,00</span>
+            <span>R$ {totalValue * 10},00</span>
           </div>
 
-          <button onClick={() => setShoppingCart([])} className="bg-red-50 border-1 border-red-100 text-red-950 p-1.5 px-3 rounded-md font-medium hover:brightness-97 transition-filter duration-100">
+          <button
+            onClick={() => setShoppingCart([])}
+            className="bg-red-50 border-1 border-red-100 text-red-950 p-1.5 px-3 rounded-md font-medium hover:brightness-97 transition-filter duration-100"
+          >
             Cancelar compra ❌
           </button>
 
