@@ -21,8 +21,11 @@ export default function ListagemVendas() {
 
       {vendas.data !== undefined &&
         vendas.data.data !== null &&
-        vendas.data.data.length === 0 &&
-        "Ainda não há nenhuma venda cadastrada."}
+        vendas.data.data.length === 0 && (
+          <>
+            <p className="p-4">Ainda não há nenhuma venda cadastrada.</p>
+          </>
+        )}
     </ul>
   );
 }

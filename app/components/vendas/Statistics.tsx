@@ -10,7 +10,7 @@ export default function Statistics({
   isError: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-2 p-7 bg-white rounded-md ">
+    <div className="flex min-w-[12.5rem] flex-col gap-2 p-7 bg-white rounded-md ">
       {isLoading && <span>Carregando...</span>}
       {isError && <span>Não foi possível carregar a informação.</span>}
 

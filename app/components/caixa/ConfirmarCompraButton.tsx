@@ -8,6 +8,7 @@ import {
 } from "@/app/lib/vendas-service";
 import { useMutation } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
+import Swal from "sweetalert2";
 
 export default function ConfirmarCompraButton({
   shoppingCart,
@@ -59,7 +60,11 @@ const useSave = () => {
       await mutateVendaProduto(vendasProdutos);
     }
     if (!venda.error || !vendaProdutosError || !vendaError) {
-      console.log("Venda cadastrada com sucesso!");
+      Swal.fire({
+        icon: "success",
+        text: "Venda cadastrada com sucesso!",
+      });
+
       setShoppingCart([]);
     } else {
       console.log("Ocorreu um erro ao cadastrar a venda.");
