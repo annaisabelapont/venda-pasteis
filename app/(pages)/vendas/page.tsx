@@ -11,28 +11,38 @@ import { useQuery } from "@tanstack/react-query";
 export default function VendasListagemEEstatisticas() {
   const somaValor = useQuery(useSumVendasQuery());
   const somaQuantidade = useQuery(useSumQuantProdsQuery());
-
+  
+  const formatCurrency = (valor: number) =>
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+    }).format(valor);
+  
+  const valorTotal = somaValor.data?.data?.[0]?.sum ?? 0;
+  const quantidadeTotal = somaQuantidade.data?.data?.[0]?.sum ?? 0;
+  
   return (
     <div className="mx-50">
       <div className="flex justify-center gap-15 mt-6 mb-14">
-        {somaValor.data && somaQuantidade.data && (
+        {!(somaValor.isLoading || somaQuantidade.isLoading) && (
           <>
             <Statistics
               isLoading={somaValor.isLoading}
               isError={somaValor.isError}
-              info={`R$ ${somaValor.data!.data![0].sum},00`}
+              info={formatCurrency(valorTotal)}
               title="LUCRO TOTAL"
             />
             <Statistics
               isLoading={somaQuantidade.isLoading}
               isError={somaQuantidade.isError}
-              info={`${somaQuantidade.data!.data![0].sum}`}
+              info={`${quantidadeTotal}`}
               title="PASTÉIS VENDIDOS"
             />
           </>
         )}
       </div>
-
+  
       <ListagemVendas />
     </div>
   );
