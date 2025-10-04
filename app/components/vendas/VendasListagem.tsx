@@ -1,9 +1,8 @@
 "use client";
 
-import {
-  useListarVendasQuery,
-} from "@/app/lib/vendas-service";
+import { useListarVendasQuery } from "@/app/lib/vendas-service";
 import { useQuery } from "@tanstack/react-query";
+import VendaRecord from "./VendaRecord";
 
 export default function ListagemVendas() {
   const vendas = useQuery(useListarVendasQuery());
@@ -14,9 +13,14 @@ export default function ListagemVendas() {
       {(vendas.isError || vendas.error !== null) && (
         <span>Não foi possível carregar a listagem de vendas.</span>
       )}
-      {vendas.data !== undefined && (
-        <pre>{JSON.stringify(vendas.data.data, null, 2)}</pre>
-      )}
+      {
+        vendas.data !== undefined &&
+          vendas.data.data !== null &&
+          vendas.data.data.map((venda, index) => (
+            <VendaRecord key={index} venda={venda} />
+          ))
+        // <pre>{JSON.stringify(vendas.data.data, null, 2)}</pre>
+      }
     </ul>
   );
 }
